@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developmental Financial Psychology Module - Fiona AI Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            background: linear-gradient(135deg, #00d4aa 0%, #7c3aed 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            border-radius: 30px;
+            font-size: 0.9em;
+            color: #a78bfa;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, rgba(0,212,170,0.2), rgba(124,58,237,0.2));
+            border-color: #00d4aa;
+            color: #00d4aa;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #00d4aa;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0,212,170,0.3);
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: #a78bfa;
+            margin: 30px 0 15px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0,212,170,0.5);
+            box-shadow: 0 10px 40px rgba(0,212,170,0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .card h4 {
+            color: #00d4aa;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            min-width: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4aa, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .step-line {
+            flex: 1;
+            width: 3px;
+            background: linear-gradient(to bottom, #7c3aed, rgba(124,58,237,0.2));
+            margin-top: 10px;
+        }
+
+        .step-content {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .step-content h4 {
+            color: #00d4aa;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .mapping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .mapping-table th,
+        .mapping-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mapping-table th {
+            background: rgba(124,58,237,0.2);
+            color: #a78bfa;
+        }
+
+        .mapping-table tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .formula-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            color: #00d4aa;
+            font-weight: bold;
+        }
+
+        .warning-box {
+            background: rgba(234,179,8,0.1);
+            border: 1px solid rgba(234,179,8,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #eab308;
+            margin-bottom: 10px;
+        }
+
+        .success-box {
+            background: rgba(0,212,170,0.1);
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: #00d4aa;
+            margin-bottom: 10px;
+        }
+
+        .architecture-diagram {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .layer {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .layer-title {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #1a1a2e;
+            padding: 0 10px;
+            color: #a78bfa;
+            font-weight: bold;
+        }
+
+        .layer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .component {
+            background: rgba(0,212,170,0.1);
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 0.9em;
+        }
+
+        .arrow-down {
+            text-align: center;
+            font-size: 2em;
+            color: #7c3aed;
+            margin: 10px 0;
+        }
+
+        ul {
+            margin: 15px 0 15px 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        .nudge-example {
+            background: rgba(124,58,237,0.1);
+            border-left: 4px solid #7c3aed;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .nudge-example .script-type {
+            color: #f472b6;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .academic-box {
+            background: linear-gradient(135deg, rgba(0,212,170,0.1), rgba(124,58,237,0.1));
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .citation {
+            font-style: italic;
+            color: #888;
+            border-left: 3px solid #7c3aed;
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Developmental Financial Psychology Module</h1>
+            <p class="subtitle">Fiona AI Extension: Healing the Inner Child's Relationship with Money</p>
+            <span class="badge">🔬 Research Architecture v1.0</span>
+        </header>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('overview')">📋 Overview</div>
+            <div class="nav-tab" onclick="showSection('theory')">🧠 Theoretical Framework</div>
+            <div class="nav-tab" onclick="showSection('assessment')">📊 Assessment Layer</div>
+            <div class="nav-tab" onclick="showSection('mapping')">🔗 FRI-Psychology Mapping</div>
+            <div class="nav-tab" onclick="showSection('intervention')">💬 Intervention Design</div>
+            <div class="nav-tab" onclick="showSection('ethics')">⚖️ Ethical Guardrails</div>
+            <div class="nav-tab" onclick="showSection('integration')">🔧 Technical Integration</div>
+            <div class="nav-tab" onclick="showSection('academic')">🎓 Academic Contribution</div>
+        </div>
+
+        <!-- OVERVIEW SECTION -->
+        <div id="overview" class="section active">
+            <h2>Module Overview</h2>
+            
+            <div class="success-box">
+                <h4>💡 Core Innovation</h4>
+                <p>The DFP Module extends Fiona's AI coaching by identifying <strong>childhood-rooted money scripts</strong> from transaction behavior and delivering <strong>psychologically-informed nudges</strong> that speak to users' developmental financial patterns—essentially providing scalable "financial reparenting."</p>
+            </div>
+
+            <h3>The Gap We're Filling</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h4>Financial Therapy Today</h4>
+                    <p>1:1 sessions, €100-200/hour, limited availability, clinical setting. Effective but not scalable.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h4>Current Fintech</h4>
+                    <p>Generic nudges based on cognitive biases (loss aversion, present bias). Surface-level, not personalized to psychological roots.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌟</div>
+                    <h4>DFP Module Innovation</h4>
+                    <p>AI-powered identification of money scripts + attachment patterns, with nudges calibrated to developmental financial psychology.</p>
+                </div>
+            </div>
+
+            <h3>System Architecture Overview</h3>
+            <div class="architecture-diagram">
+                <div class="layer">
+                    <span class="layer-title">LAYER 1: ASSESSMENT</span>
+                    <div class="layer-content">
+                        <div class="component">Money Script Inventory (KMSI-adapted)</div>
+                        <div class="component">Attachment Style Questionnaire</div>
+                        <div class="component">Financial Origin Story</div>
+                    </div>
+                </div>
+                <div class="arrow-down">⬇️</div>
+                <div class="layer">
+                    <span class="layer-title">LAYER 2: BEHAVIORAL INFERENCE</span>
+                    <div class="layer-content">
+                        <div class="component">Transaction Pattern Analysis</div>
+                        <div class="component">FRI Component Signatures</div>
+                        <div class="component">Stress Response Detection</div>
+                    </div>
+                </div>
+                <div class="arrow-down">⬇️</div>
+                <div class="layer">
+                    <span class="layer-title">LAYER 3: PSYCHOLOGICAL PROFILE</span>
+                    <div class="layer-content">
+                        <div class="component">Money Script Classification</div>
+                        <div class="component">Attachment-Finance Mapping</div>
+                        <div class="component">Developmental Wound Hypothesis</div>
+                    </div>
+                </div>
+                <div class="arrow-down">⬇️</div>
+                <div class="layer">
+                    <span class="layer-title">LAYER 4: INTERVENTION ENGINE</span>
+                    <div class="layer-content">
+                        <div class="component">Nudge Tone Calibration</div>
+                        <div class="component">Reparenting Message Templates</div>
+                        <div class="component">Timing Optimization</div>
+                    </div>
+                </div>
+                <div class="arrow-down">⬇️</div>
+                <div class="layer">
+                    <span class="layer-title">LAYER 5: SAFETY & ETHICS</span>
+                    <div class="layer-content">
+                        <div class="component">Trauma Threshold Detection</div>
+                        <div class="component">Therapist Referral Triggers</div>
+                        <div class="component">Consent Management</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THEORY SECTION -->
+        <div id="theory" class="section">
+            <h2>Theoretical Framework</h2>
+
+            <div class="academic-box">
+                <h4>🎯 Foundational Premise</h4>
+                <p>Adult financial behaviors are significantly shaped by unconscious beliefs formed in childhood. By identifying these patterns and addressing them with developmentally-appropriate interventions, we can achieve behavior change that cognitive-only approaches cannot.</p>
+            </div>
+
+            <h3>Three Pillars of DFP</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📜</div>
+                    <h4>1. Money Scripts Theory (Klontz)</h4>
+                    <p><strong>Core Insight:</strong> Unconscious beliefs about money, typically formed before age 10, drive adult financial behavior.</p>
+                    <div class="citation">"Money scripts are typically unconscious, developed in childhood, passed down from generation to generation within families and cultures, contextually bound, and often only partial truths." — Klontz & Klontz, 2009</div>
+                    <p><strong>Four Script Categories:</strong></p>
+                    <ul>
+                        <li><strong>Money Avoidance:</strong> "Money is bad/I don't deserve it"</li>
+                        <li><strong>Money Worship:</strong> "More money will solve everything"</li>
+                        <li><strong>Money Status:</strong> "Self-worth = Net worth"</li>
+                        <li><strong>Money Vigilance:</strong> "Money is shameful/secret"</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔗</div>
+                    <h4>2. Attachment Theory (Bowlby/Ainsworth)</h4>
+                    <p><strong>Core Insight:</strong> Early caregiver relationships create internal working models that shape how we relate to security, risk, and resources.</p>
+                    <div class="citation">"Money is 90% emotion, 10% logic... Attachment styles, the emotional blueprints we develop in childhood, profoundly influence our ability to manage budgets, save, and invest." — Brad Klontz</div>
+                    <p><strong>Four Attachment Styles:</strong></p>
+                    <ul>
+                        <li><strong>Secure:</strong> Balanced financial approach</li>
+                        <li><strong>Anxious:</strong> Compulsive checking, fear of scarcity</li>
+                        <li><strong>Avoidant:</strong> Financial denial, ignoring money</li>
+                        <li><strong>Fearful-Avoidant:</strong> Oscillating extremes</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👶</div>
+                    <h4>3. Inner Child / Reparenting</h4>
+                    <p><strong>Core Insight:</strong> Healing requires addressing the wounded child-self that formed the maladaptive pattern.</p>
+                    <p><strong>Application to Finance:</strong></p>
+                    <ul>
+                        <li>The "inner child" holds the original money wound</li>
+                        <li>"Reparenting" = providing what wasn't given (safety, permission, validation)</li>
+                        <li>Nudges can serve as micro-reparenting moments</li>
+                        <li>Goal: Rewire the emotional relationship with money</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Integration Model: DFP Triangle</h3>
+            <div class="formula-box">
+<pre>
+                    MONEY SCRIPTS
+                    (What I believe)
+                         /\
+                        /  \
+                       /    \
+                      /      \
+                     /   DFP  \
+                    /  MODULE  \
+                   /____________\
+    ATTACHMENT STYLE          FINANCIAL BEHAVIOR
+    (How I relate)              (What I do)
+                                    ↓
+                              FRI MEASUREMENT
+                          (Buffer, Stability, Momentum)
+</pre>
+            </div>
+        </div>
+
+        <!-- ASSESSMENT SECTION -->
+        <div id="assessment" class="section">
+            <h2>Assessment Layer</h2>
+
+            <p>The DFP Module uses a <strong>multi-modal assessment approach</strong>: explicit self-report + implicit behavioral inference from transaction data.</p>
+
+            <h3>Component 1: Onboarding Assessment (Explicit)</h3>
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">1</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Money Script Mini-Inventory</h4>
+                        <p>8-12 questions adapted from KMSI-R, designed for mobile-first experience.</p>
+                        <div class="formula-box">
+<pre>Example Questions:
+• "When I was growing up, my family talked about money..."
+  □ Openly and calmly  □ With stress  □ Never  □ Only when fighting
+
+• "My earliest money memory involves feeling..."
+  □ Safe/secure  □ Anxious/worried  □ Ashamed  □ Excited/hopeful
+
+• "I believe people with a lot of money are..."
+  □ Lucky  □ Greedy  □ Hardworking  □ No different from others
+</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">2</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Financial Attachment Screener</h4>
+                        <p>6 questions mapping attachment style to financial behavior.</p>
+                        <div class="formula-box">
+<pre>Example Questions:
+• "When I check my bank balance, I usually feel..."
+  □ Calm/neutral  □ Anxious  □ I avoid checking  □ It depends on my mood
+
+• "When unexpected money arrives (bonus, gift), my first instinct is..."
+  □ Save it  □ Spend it quickly  □ Feel guilty  □ Not sure what to do
+</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">3</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Financial Origin Story (Optional Deep Dive)</h4>
+                        <p>Free-text prompt analyzed by FinBERT for emotional valence and key themes.</p>
+                        <div class="formula-box">
+<pre>Prompt: "Describe your earliest memory involving money. 
+How did you feel? Who was involved?"
+
+FinBERT Analysis Extracts:
+• Emotional valence: -0.72 (negative)
+• Key entities: "father", "argument", "not enough"
+• Trauma indicators: HIGH
+• Money script hypothesis: Avoidance + Anxious Attachment
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Component 2: Behavioral Inference (Implicit)</h3>
+            <p>The system continuously refines the psychological profile based on observed transaction patterns.</p>
+
+            <table class="mapping-table">
+                <tr>
+                    <th>Behavioral Signal</th>
+                    <th>Transaction Pattern</th>
+                    <th>Psychological Inference</th>
+                </tr>
+                <tr>
+                    <td>Compulsive Checking</td>
+                    <td>App opens &gt;10x/day, especially at night</td>
+                    <td>Anxious attachment, Money Vigilance</td>
+                </tr>
+                <tr>
+                    <td>Avoidance</td>
+                    <td>No app opens for 30+ days, unopened statements</td>
+                    <td>Avoidant attachment, Money Avoidance</td>
+                </tr>
+                <tr>
+                    <td>Emotional Spending</td>
+                    <td>Retail spikes after stressful events (detected via sentiment)</td>
+                    <td>Money Worship, Anxious attachment</td>
+                </tr>
+                <tr>
+                    <td>Hoarding</td>
+                    <td>Buffer &gt;12 months but refuses to spend</td>
+                    <td>Extreme Money Vigilance, Fearful attachment</td>
+                </tr>
+                <tr>
+                    <td>Status Spending</td>
+                    <td>Luxury purchases exceeding income percentile</td>
+                    <td>Money Status, Anxious attachment</td>
+                </tr>
+                <tr>
+                    <td>Oscillation</td>
+                    <td>Alternating extreme saving and spending cycles</td>
+                    <td>Fearful-Avoidant attachment</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- MAPPING SECTION -->
+        <div id="mapping" class="section">
+            <h2>FRI-Psychology Mapping</h2>
+
+            <div class="success-box">
+                <h4>🔗 Key Innovation</h4>
+                <p>The DFP Module creates a <strong>bidirectional mapping</strong> between FRI components (Buffer, Stability, Momentum) and psychological patterns. This allows us to infer psychology from behavior AND calibrate interventions to improve FRI.</p>
+            </div>
+
+            <h3>FRI Component → Psychological Signature Matrix</h3>
+            <table class="mapping-table">
+                <tr>
+                    <th>FRI Pattern</th>
+                    <th>Score Profile</th>
+                    <th>Primary Money Script</th>
+                    <th>Attachment Hypothesis</th>
+                    <th>Inner Child Wound</th>
+                </tr>
+                <tr>
+                    <td><strong>Anxious Hoarder</strong></td>
+                    <td>Buffer: HIGH<br>Stability: HIGH<br>Momentum: FLAT</td>
+                    <td>Money Vigilance</td>
+                    <td>Anxious</td>
+                    <td>"I must always be prepared for the worst"</td>
+                </tr>
+                <tr>
+                    <td><strong>Avoidant Drifter</strong></td>
+                    <td>Buffer: LOW<br>Stability: LOW<br>Momentum: DECLINING</td>
+                    <td>Money Avoidance</td>
+                    <td>Avoidant</td>
+                    <td>"Money is too painful to think about"</td>
+                </tr>
+                <tr>
+                    <td><strong>Status Chaser</strong></td>
+                    <td>Buffer: LOW<br>Stability: VARIABLE<br>Momentum: VOLATILE</td>
+                    <td>Money Status</td>
+                    <td>Anxious</td>
+                    <td>"I need to prove my worth through things"</td>
+                </tr>
+                <tr>
+                    <td><strong>Magical Thinker</strong></td>
+                    <td>Buffer: LOW<br>Stability: LOW<br>Momentum: HOPING</td>
+                    <td>Money Worship</td>
+                    <td>Anxious/Avoidant</td>
+                    <td>"If I just had more, everything would be OK"</td>
+                </tr>
+                <tr>
+                    <td><strong>Oscillator</strong></td>
+                    <td>Buffer: VARIABLE<br>Stability: CHAOTIC<br>Momentum: SWINGING</td>
+                    <td>Mixed Scripts</td>
+                    <td>Fearful-Avoidant</td>
+                    <td>"I can't trust myself or money"</td>
+                </tr>
+                <tr>
+                    <td><strong>Balanced (Target)</strong></td>
+                    <td>Buffer: ADEQUATE<br>Stability: HIGH<br>Momentum: POSITIVE</td>
+                    <td>Healthy Vigilance</td>
+                    <td>Secure</td>
+                    <td>"Money is a tool, not a threat"</td>
+                </tr>
+            </table>
+
+            <h3>Scoring Algorithm</h3>
+            <div class="formula-box">
+<pre>
+DFP_Profile = {
+    money_script: argmax(script_scores),
+    attachment_style: classify(attachment_indicators),
+    wound_hypothesis: map(money_script, attachment_style),
+    confidence: weighted_avg(explicit_assessment, behavioral_inference)
+}
+
+where:
+    script_scores = [avoidance, worship, status, vigilance]
+    attachment_indicators = [checking_frequency, avoidance_days, emotional_spending_correlation, ...]
+    
+FRI_DFP_Integration:
+    - Buffer patterns → Vigilance vs Avoidance inference
+    - Stability CV → Attachment security inference  
+    - Momentum direction → Change readiness indicator
+</pre>
+            </div>
+        </div>
+
+        <!-- INTERVENTION SECTION -->
+        <div id="intervention" class="section">
+            <h2>Intervention Design: Inner Child Nudges</h2>
+
+            <div class="warning-box">
+                <h4>⚠️ Critical Design Principle</h4>
+                <p>The goal is to <strong>heal</strong>, not manipulate. Every nudge should serve the user's authentic wellbeing, not engagement metrics or product sales. This is "financial reparenting," not "exploitation of childhood wounds."</p>
+            </div>
+
+            <h3>Nudge Architecture</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h4>Tone Calibration</h4>
+                    <p>Different money scripts require different communication styles:</p>
+                    <ul>
+                        <li><strong>Avoidance:</strong> Gentle, non-judgmental, normalizing</li>
+                        <li><strong>Worship:</strong> Grounding, realistic, values-focused</li>
+                        <li><strong>Status:</strong> Self-worth affirming, identity-separating</li>
+                        <li><strong>Vigilance:</strong> Permission-giving, safety-affirming</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⏰</div>
+                    <h4>Timing Optimization</h4>
+                    <p>Deliver nudges at psychologically receptive moments:</p>
+                    <ul>
+                        <li><strong>Post-stress:</strong> After detected emotional spending</li>
+                        <li><strong>Pre-decision:</strong> Before large purchase patterns</li>
+                        <li><strong>Milestone:</strong> At FRI improvement points</li>
+                        <li><strong>Avoidance break:</strong> After prolonged app absence</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h4>Reparenting Elements</h4>
+                    <p>Include what the inner child needed but didn't get:</p>
+                    <ul>
+                        <li><strong>Safety:</strong> "Your financial situation is manageable"</li>
+                        <li><strong>Permission:</strong> "It's okay to enjoy some of what you've earned"</li>
+                        <li><strong>Validation:</strong> "Many people feel this way about money"</li>
+                        <li><strong>Guidance:</strong> "Here's a small step that might help"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Example Nudges by Money Script</h3>
+
+            <div class="nudge-example">
+                <div class="script-type">💎 MONEY VIGILANCE (Anxious Hoarder)</div>
+                <p><strong>Trigger:</strong> User has 8+ months buffer but shows anxiety about spending €50 on self-care</p>
+                <p><strong>Standard Nudge:</strong> "You have enough savings to cover this purchase."</p>
+                <p><strong>DFP Nudge:</strong> "I notice you've built an impressive safety net—8 months of expenses! That younger part of you that learned to always worry about 'what if' has done its job really well. But you've reached a point where you're safe. It's okay to let yourself enjoy some of what you've worked for. That €50 won't change your security, but it might change your day. You deserve both safety AND joy."</p>
+            </div>
+
+            <div class="nudge-example">
+                <div class="script-type">🙈 MONEY AVOIDANCE (Avoidant Drifter)</div>
+                <p><strong>Trigger:</strong> User hasn't opened app in 45 days, FRI declining</p>
+                <p><strong>Standard Nudge:</strong> "Your account needs attention. Click to review."</p>
+                <p><strong>DFP Nudge:</strong> "Hey—I know money stuff can feel overwhelming, and sometimes it's easier to just... not look. That makes total sense. But I wanted you to know: whatever you find when you check in, we can figure it out together. No judgment here. Just a gentle heads up that a few small things might need attention. Whenever you're ready, I'm here. No rush, no pressure."</p>
+            </div>
+
+            <div class="nudge-example">
+                <div class="script-type">👑 MONEY STATUS (Status Chaser)</div>
+                <p><strong>Trigger:</strong> Detected pattern of luxury spending after professional setback</p>
+                <p><strong>Standard Nudge:</strong> "Your spending is above your monthly average."</p>
+                <p><strong>DFP Nudge:</strong> "I can see this week has been tough at work. It's natural to want to feel good about yourself—you deserve to feel valued. But here's something I've noticed: the things that make you feel most accomplished aren't in your recent purchases. They're in the skills you're building, the relationships you're nurturing. Your worth isn't in your cart. Would you like to talk about what's really going on?"</p>
+            </div>
+
+            <div class="nudge-example">
+                <div class="script-type">✨ MONEY WORSHIP (Magical Thinker)</div>
+                <p><strong>Trigger:</strong> User expresses belief that upcoming bonus will "solve everything"</p>
+                <p><strong>Standard Nudge:</strong> "Plan how you'll allocate your bonus."</p>
+                <p><strong>DFP Nudge:</strong> "I hear the hope in your message about that bonus—and it's great to have something to look forward to! I want to gently share something though: research shows that financial windfalls often leave us feeling the same as before within a few months. The peace you're looking for might not be in the bonus amount itself, but in the small, steady actions we can take right now. What if we focused on building that peace today, so the bonus becomes a nice addition rather than your only hope?"</p>
+            </div>
+
+            <h3>Nudge Template Structure</h3>
+            <div class="formula-box">
+<pre>
+NudgeTemplate = {
+    trigger: BehavioralSignal | TemporalTrigger | FRIThreshold,
+    money_script: MoneyScript,
+    attachment_style: AttachmentStyle,
+    
+    elements: {
+        validation: String,      // Normalize the feeling
+        reframe: String,         // Challenge the belief gently
+        permission: String,      // Give what was missing
+        action: String,          // Small, achievable step
+        safety: String           // Reassurance of support
+    },
+    
+    tone: {
+        warmth: 0.0-1.0,
+        directness: 0.0-1.0,
+        formality: 0.0-1.0
+    },
+    
+    safety_check: {
+        trauma_risk: LOW | MEDIUM | HIGH,
+        referral_trigger: Boolean
+    }
+}
+</pre>
+            </div>
+        </div>
+
+        <!-- ETHICS SECTION -->
+        <div id="ethics" class="section">
+            <h2>Ethical Guardrails</h2>
+
+            <div class="warning-box">
+                <h4>🚨 The Fundamental Tension</h4>
+                <p>Speaking to someone's "inner child" can be profoundly healing OR deeply manipulative. The difference is <strong>intent</strong> and <strong>consent</strong>. Every design decision must be evaluated through this lens.</p>
+            </div>
+
+            <h3>Ethical Framework: The Three Tests</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">1️⃣</div>
+                    <h4>The Therapist Test</h4>
+                    <p>"Would a licensed financial therapist approve of this intervention?"</p>
+                    <p>If the nudge would make a professional uncomfortable, don't send it.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">2️⃣</div>
+                    <h4>The Transparency Test</h4>
+                    <p>"If the user fully understood how we're using their psychology, would they still want this?"</p>
+                    <p>If it only works when hidden, it's manipulation.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">3️⃣</div>
+                    <h4>The Outcome Test</h4>
+                    <p>"Does this serve the user's authentic wellbeing or our engagement metrics?"</p>
+                    <p>If it increases app usage but not financial health, reconsider.</p>
+                </div>
+            </div>
+
+            <h3>Mandatory Safeguards</h3>
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">🔐</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Explicit Consent Layer</h4>
+                        <p>Users must opt-in to "psychological insights" with clear explanation:</p>
+                        <ul>
+                            <li>"Fiona can learn about your money mindset to give more personalized support"</li>
+                            <li>"This includes understanding patterns from your childhood and emotions"</li>
+                            <li>"You can turn this off anytime"</li>
+                        </ul>
+                        <p><strong>GDPR Note:</strong> Psychological profiling requires explicit consent under Art. 9 (special category data).</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">🚦</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Trauma Threshold Detection</h4>
+                        <p>System monitors for signs that intervention is causing harm:</p>
+                        <ul>
+                            <li>Negative sentiment spikes after DFP nudges</li>
+                            <li>User explicitly references distress/trauma</li>
+                            <li>Behavioral patterns suggesting mental health crisis</li>
+                        </ul>
+                        <p><strong>Action:</strong> Automatically de-escalate to supportive-only mode.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">👨‍⚕️</div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Therapist Referral System</h4>
+                        <p>When depth of issues exceeds app capability:</p>
+                        <ul>
+                            <li>Detect patterns suggesting clinical-level issues</li>
+                            <li>Provide warm handoff to financial therapy resources</li>
+                            <li>"Some of what you're experiencing might benefit from deeper support. Here are some resources..."</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">
+                        <div class="step-circle">🚫</div>
+                    </div>
+                    <div class="step-content">
+                        <h4>Hard Boundaries (Never Cross)</h4>
+                        <ul>
+                            <li>❌ Never use psychological insights to sell products</li>
+                            <li>❌ Never exploit vulnerabilities for engagement</li>
+                            <li>❌ Never attempt to replace actual therapy</li>
+                            <li>❌ Never store childhood trauma details in marketing-accessible databases</li>
+                            <li>❌ Never share psychological profiles with third parties</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Governance Structure</h3>
+            <table class="mapping-table">
+                <tr>
+                    <th>Role</th>
+                    <th>Responsibility</th>
+                    <th>Veto Power</th>
+                </tr>
+                <tr>
+                    <td>Clinical Advisor</td>
+                    <td>Review nudge templates for psychological appropriateness</td>
+                    <td>Yes - can block any nudge</td>
+                </tr>
+                <tr>
+                    <td>Ethics Board</td>
+                    <td>Quarterly review of system impact and user complaints</td>
+                    <td>Yes - can pause feature</td>
+                </tr>
+                <tr>
+                    <td>Data Protection Officer</td>
+                    <td>Ensure GDPR compliance for psychological data</td>
+                    <td>Yes - compliance issues</td>
+                </tr>
+                <tr>
+                    <td>User Advisory Panel</td>
+                    <td>Real user feedback on experience and concerns</td>
+                    <td>Advisory only</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- INTEGRATION SECTION -->
+        <div id="integration" class="section">
+            <h2>Technical Integration</h2>
+
+            <h3>Integration with Existing Fiona Pipeline</h3>
+            <div class="architecture-diagram">
+                <div class="formula-box">
+<pre>
+EXISTING FIONA PIPELINE                      DFP MODULE ADDITIONS
+═══════════════════════                      ════════════════════
+
+┌─────────────────────┐                      ┌─────────────────────┐
+│   USER MESSAGE      │                      │   DFP ASSESSMENT    │
+│   "I'm stressed..." │                      │   (Onboarding)      │
+└─────────┬───────────┘                      └─────────┬───────────┘
+          │                                            │
+          ▼                                            ▼
+┌─────────────────────┐                      ┌─────────────────────┐
+│   FINBERT ANALYSIS  │◄────────────────────►│ PSYCHOLOGICAL       │
+│   - Sentiment       │     Enrichment       │ PROFILE STORE       │
+│   - Entities        │                      │ - Money Script      │
+│   - Stress signals  │                      │ - Attachment Style  │
+└─────────┬───────────┘                      │ - Wound Hypothesis  │
+          │                                  └─────────┬───────────┘
+          ▼                                            │
+┌─────────────────────┐                                │
+│   FRI CONTEXT       │◄───────────────────────────────┘
+│   - Buffer: 42      │     FRI-Psychology
+│   - Stability: 38   │     Mapping
+│   - Momentum: 52    │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐                      ┌─────────────────────┐
+│   RAG RETRIEVAL     │◄────────────────────►│ DFP CONTENT STORE   │
+│   - ERSTE research  │     Script-specific  │ - Reparenting msgs  │
+│   - Similar cases   │     content          │ - Script-matched    │
+└─────────┬───────────┘                      │   interventions     │
+          │                                  └─────────────────────┘
+          ▼
+┌─────────────────────┐                      ┌─────────────────────┐
+│   LLM GENERATION    │◄────────────────────►│ NUDGE CALIBRATOR    │
+│   (Claude/GPT-4)    │     Tone/style       │ - Tone parameters   │
+│                     │     injection        │ - Safety checks     │
+└─────────┬───────────┘                      └─────────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│   COACHING RESPONSE │
+│   (DFP-Enhanced)    │
+└─────────────────────┘
+</pre>
+                </div>
+            </div>
+
+            <h3>Data Schema Extensions</h3>
+            <div class="formula-box">
+<pre>
+// New Tables
+CREATE TABLE dfp_profiles (
+    user_id UUID PRIMARY KEY,
+    money_script_scores JSONB,        -- {avoidance: 0.7, worship: 0.2, ...}
+    primary_script VARCHAR(20),
+    attachment_style VARCHAR(20),
+    wound_hypothesis TEXT,
+    confidence_score FLOAT,
+    assessment_date TIMESTAMP,
+    last_inference_update TIMESTAMP,
+    consent_granted BOOLEAN,
+    consent_date TIMESTAMP
+);
+
+CREATE TABLE dfp_behavioral_signals (
+    id SERIAL PRIMARY KEY,
+    user_id UUID REFERENCES dfp_profiles(user_id),
+    signal_type VARCHAR(50),
+    signal_value JSONB,
+    detected_at TIMESTAMP,
+    fri_context JSONB
+);
+
+CREATE TABLE dfp_nudges_sent (
+    id SERIAL PRIMARY KEY,
+    user_id UUID,
+    nudge_template_id VARCHAR(50),
+    money_script_target VARCHAR(20),
+    trigger_type VARCHAR(50),
+    sent_at TIMESTAMP,
+    user_response VARCHAR(20),         -- opened, dismissed, engaged
+    sentiment_after FLOAT,
+    fri_change_7d FLOAT
+);
+
+CREATE TABLE dfp_safety_events (
+    id SERIAL PRIMARY KEY,
+    user_id UUID,
+    event_type VARCHAR(50),            -- trauma_detected, referral_triggered
+    severity VARCHAR(20),
+    action_taken VARCHAR(100),
+    created_at TIMESTAMP
+);
+</pre>
+            </div>
+
+            <h3>API Endpoints</h3>
+            <div class="formula-box">
+<pre>
+# DFP Module API
+
+POST /api/dfp/assessment/start
+    → Initiates onboarding assessment flow
+    
+POST /api/dfp/assessment/submit
+    → Submits assessment responses, calculates profile
+    
+GET /api/dfp/profile/{user_id}
+    → Returns current psychological profile
+    
+POST /api/dfp/inference/update
+    → Triggers behavioral inference update from recent transactions
+    
+GET /api/dfp/nudge/generate
+    → Generates appropriate nudge based on context + profile
+    
+POST /api/dfp/nudge/feedback
+    → Records user response to nudge for learning
+    
+POST /api/dfp/safety/check
+    → Evaluates current state against safety thresholds
+    
+GET /api/dfp/consent/status
+    → Returns user's consent status for DFP features
+</pre>
+            </div>
+
+            <h3>LLM Prompt Injection Pattern</h3>
+            <div class="formula-box">
+<pre>
+# Enhanced System Prompt for Fiona with DFP Context
+
+SYSTEM_PROMPT = """
+You are Fiona, an empathetic AI financial coach.
+
+## User's Financial Context (FRI)
+{fri_context}
+
+## User's Psychological Profile (DFP) 
+{dfp_profile}
+
+## Communication Guidelines for this User
+Based on their {primary_script} money script and {attachment_style} attachment:
+- Tone: {tone_parameters}
+- Key needs: {reparenting_elements}
+- Avoid: {contraindicated_approaches}
+
+## Reparenting Elements to Include
+When appropriate, weave in:
+- {validation_message}
+- {permission_message}
+- {safety_message}
+
+## Safety Boundaries
+- Trauma risk level: {trauma_risk}
+- If user shows {escalation_signals}, redirect to: {referral_resources}
+
+Remember: You are providing financial coaching with psychological awareness,
+not therapy. Keep interventions light, supportive, and action-oriented.
+"""
+</pre>
+            </div>
+        </div>
+
+        <!-- ACADEMIC SECTION -->
+        <div id="academic" class="section">
+            <h2>Academic Contribution</h2>
+
+            <div class="academic-box">
+                <h4>🎓 PhD Research Positioning</h4>
+                <p>The DFP Module represents a novel intersection of three established fields—creating a new subdiscipline: <strong>"Developmental Financial Technology"</strong> or <strong>"Computational Financial Psychology"</strong>.</p>
+            </div>
+
+            <h3>Research Contributions</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h4>Contribution 1: FRI-Psychology Mapping</h4>
+                    <p><strong>Novel Claim:</strong> FRI components (Buffer, Stability, Momentum) can serve as behavioral proxies for psychological constructs (money scripts, attachment styles).</p>
+                    <p><strong>Validation Method:</strong> Correlational study between explicit KMSI scores and FRI-inferred psychological profiles.</p>
+                    <p><strong>Expected Output:</strong> Peer-reviewed paper in Journal of Financial Therapy or Journal of Behavioral Finance.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧪</div>
+                    <h4>Contribution 2: Reparenting Nudge Efficacy</h4>
+                    <p><strong>Novel Claim:</strong> Psychologically-calibrated nudges outperform generic behavioral nudges for sustained financial behavior change.</p>
+                    <p><strong>Validation Method:</strong> RCT with Snappi users (control: standard nudges, treatment: DFP nudges).</p>
+                    <p><strong>Expected Output:</strong> Paper demonstrating X% improvement in FRI scores with DFP approach.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h4>Contribution 3: Scalable Financial Therapy</h4>
+                    <p><strong>Novel Claim:</strong> AI can deliver elements of financial therapy at scale without requiring clinical licensure (within defined boundaries).</p>
+                    <p><strong>Validation Method:</strong> User satisfaction + clinical advisor review + outcome comparison with traditional financial coaching.</p>
+                    <p><strong>Expected Output:</strong> Framework paper + policy recommendations for regulators.</p>
+                </div>
+            </div>
+
+            <h3>Theoretical Framework Publication</h3>
+            <div class="formula-box">
+<pre>
+Proposed Paper Title:
+"Developmental Financial Psychology in Digital Banking: 
+ A Framework for AI-Mediated Financial Reparenting"
+
+Abstract Structure:
+1. Gap: Existing fintech uses surface-level behavioral economics; 
+   ignores developmental origins of financial behavior
+   
+2. Framework: Integration of Money Scripts (Klontz) + Attachment Theory 
+   (Bowlby) + Behavioral Nudges (Thaler) into unified DFP model
+   
+3. Implementation: FRI as behavioral measurement layer; 
+   LLM as intervention delivery mechanism
+   
+4. Ethics: Consent architecture, safety boundaries, therapist vs. coach distinction
+
+5. Validation: Proposed RCT design for efficacy testing
+
+Target Journals:
+- Journal of Financial Therapy (primary)
+- Journal of Consumer Psychology
+- Journal of Behavioral Finance
+- Fintech & Society (if exists)
+</pre>
+            </div>
+
+            <h3>Dissertation Integration</h3>
+            <div class="two-col">
+                <div class="card">
+                    <h4>Current FRI Dissertation Focus</h4>
+                    <ul>
+                        <li>Chapter 1: Literature Review (Financial Wellness Metrics)</li>
+                        <li>Chapter 2: FRI Methodology (Buffer, Stability, Momentum)</li>
+                        <li>Chapter 3: Validation Studies</li>
+                        <li>Chapter 4: AI Coaching Integration</li>
+                        <li>Chapter 5: Results & Discussion</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>DFP Extension (Chapter 6 or Separate Paper)</h4>
+                    <ul>
+                        <li>6.1: Theoretical Foundation of DFP</li>
+                        <li>6.2: FRI-Psychology Mapping Methodology</li>
+                        <li>6.3: Intervention Design Framework</li>
+                        <li>6.4: Ethical Considerations</li>
+                        <li>6.5: Pilot Study Results</li>
+                        <li>6.6: Future Research Agenda</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Competitive Academic Positioning</h3>
+            <table class="mapping-table">
+                <tr>
+                    <th>Existing Work</th>
+                    <th>Their Focus</th>
+                    <th>DFP Differentiation</th>
+                </tr>
+                <tr>
+                    <td>Klontz Money Scripts</td>
+                    <td>Assessment & clinical application</td>
+                    <td>Automated inference + scalable intervention</td>
+                </tr>
+                <tr>
+                    <td>Financial Therapy Association</td>
+                    <td>1:1 therapeutic practice</td>
+                    <td>AI-mediated, mass-market application</td>
+                </tr>
+                <tr>
+                    <td>Behavioral Finance (Thaler, etc.)</td>
+                    <td>Cognitive biases, generic nudges</td>
+                    <td>Developmental psychology integration</td>
+                </tr>
+                <tr>
+                    <td>Attachment & Finance Research</td>
+                    <td>Correlational studies</td>
+                    <td>Intervention design based on attachment</td>
+                </tr>
+                <tr>
+                    <td>FRI (Your Innovation)</td>
+                    <td>Financial wellness measurement</td>
+                    <td>Psychological causation layer added</td>
+                </tr>
+            </table>
+
+            <div class="success-box">
+                <h4>💎 The Unique Value Proposition</h4>
+                <p>Nobody has created a system that: (1) infers childhood money psychology from transaction data, (2) maps this to a validated financial wellness index, and (3) delivers psychologically-calibrated interventions at scale. This is genuinely novel territory.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
