@@ -7,7 +7,7 @@ to compute Buffer (45%), Stability (30%), and Momentum (25%) components.
 This module contains ONLY calculation logic, weights, and scale factors.
 Transaction classification rules live in fri_category_map.py.
 
-Author: George Tsomidis, PhD — University of Piraeus
+Author: George Tsomidis, PhD — Cogninance 
 """
 
 import numpy as np
@@ -72,7 +72,7 @@ DATA_MODE_WEIGHTS = {
 class FRIResult:
     """Complete FRI calculation result with full audit trail."""
     total_score: float
-    buffer: float
+    Βuffer: float
     stability: float
     momentum: float
     weights: dict
@@ -103,7 +103,7 @@ class FRIResult:
         return {
             'fri_score': round(self.total_score, 2),
             'components': {
-                'buffer':    {'score': round(self.buffer, 2),    'weight': self.weights['buffer']},
+                'buffer':    {'score': round(self.Buffer, 2),    'weight': self.weights['buffer']},
                 'stability': {'score': round(self.stability, 2), 'weight': self.weights['stability']},
                 'momentum':  {'score': round(self.momentum, 2),  'weight': self.weights['momentum']},
             },
@@ -224,7 +224,7 @@ class FRICalculator:
         classified = self.classifier.classify(transactions)
         data_mode, months_available = self._determine_data_mode(classified, calc_date)
 
-        buffer, buffer_detail = self._calculate_buffer(
+        Buffer, buffer_detail = self._calculate_buffer(
             classified, current_balance, savings_balance, age, calc_date
         )
         stability, stability_detail = self._calculate_stability(classified, calc_date)
@@ -236,7 +236,7 @@ class FRICalculator:
         weights = self._select_weights(data_mode, income_segment)
 
         total = np.clip(
-            weights['buffer'] * buffer +
+            weights['buffer'] * Buffer +
             weights['stability'] * stability +
             weights['momentum'] * momentum,
             0, 100,
@@ -244,12 +244,12 @@ class FRICalculator:
 
         data_quality = self._assess_data_quality(classified, months_available, calc_date)
         coaching_signals = self._detect_coaching_signals(
-            classified, buffer, stability, momentum, momentum_detail, calc_date
+            classified, Buffer, stability, momentum, momentum_detail, calc_date
         )
 
         return FRIResult(
             total_score=total,
-            buffer=buffer,
+            Buffer=Buffer,
             stability=stability,
             momentum=momentum,
             weights=weights,
@@ -265,7 +265,7 @@ class FRICalculator:
         )
 
     # ────────────────────────────────────────────────────────────────────
-    # BUFFER: B_i,t = min(100, (A_i,t / E^essential_i,t) × scale_factor)
+    # BUFFER: B_i,t = min(100, (A_i,t / E^{essential}_i,t) × scale_factor)
     # ────────────────────────────────────────────────────────────────────
 
     def _calculate_buffer(
@@ -302,10 +302,10 @@ class FRICalculator:
         avg_monthly_essential = total_essential_3m / months_in_window
 
         if avg_monthly_essential <= 0:
-            buffer = 100.0
+            Buffer = 100.0
         else:
-            buffer = min(100.0, (liquid_assets / avg_monthly_essential) * scale_factor)
-        buffer = max(0.0, buffer)
+            Buffer = min(100.0, (liquid_assets / avg_monthly_essential) * scale_factor)
+        Buffer = max(0.0, Buffer)
 
         detail = {
             'liquid_assets': round(liquid_assets, 2),
@@ -321,7 +321,7 @@ class FRICalculator:
             'essential_ratio_used': self.essential_ratio_fallback,
             'buffer_months': round(liquid_assets / avg_monthly_essential, 2) if avg_monthly_essential > 0 else None,
         }
-        return buffer, detail
+        return Buffer, detail
 
     # ────────────────────────────────────────────────────────────────────
     # STABILITY: S_i,t = 100 × (1 − CV_income), CV = min(1, σ/μ)
@@ -330,7 +330,7 @@ class FRICalculator:
     def _calculate_stability(
         self, df: pd.DataFrame, calc_date: datetime,
     ) -> tuple[float, dict]:
-        six_months_ago = calc_date - timedelta(days=180)
+        six_months_ago = calc_date - timedelta(days=180)  # 6-months
         income_df = df[
             (df['fri_role'].isin(INCOME_ROLES)) &
             (df['transaction_date'] >= six_months_ago) &
@@ -392,8 +392,8 @@ class FRICalculator:
     def _calculate_momentum(
         self, df: pd.DataFrame, buffer_detail: dict, calc_date: datetime,
     ) -> tuple[float, dict]:
-        three_months_ago = calc_date - timedelta(days=90)
-        six_months_ago = calc_date - timedelta(days=180)
+        three_months_ago = calc_date - timedelta(days=90)  # 3-months
+        six_months_ago = calc_date - timedelta(days=180)  # 6-months
 
         recent = df[df['transaction_date'] >= three_months_ago]
         prior = df[
@@ -556,11 +556,11 @@ class FRICalculator:
 
     def _detect_coaching_signals(
         self, df: pd.DataFrame,
-        buffer: float, stability: float, momentum: float,
+        Buffer: float, stability: float, momentum: float,
         momentum_detail: dict, calc_date: datetime,
     ) -> list[dict]:
         signals = []
-        three_months_ago = calc_date - timedelta(days=90)
+        three_months_ago = calc_date - timedelta(days=90)  # 3 months
         recent = df[df['transaction_date'] >= three_months_ago]
 
         # Snooze fee = payment delay distress
@@ -595,9 +595,9 @@ class FRICalculator:
             })
 
         # Low buffer
-        if buffer < 30:
-            severity = 'HIGH' if buffer < 15 else 'MEDIUM'
-            months_label = '1 month' if buffer < 15 else '2 months'
+        if Buffer < 30:
+            severity = 'HIGH' if Buffer < 15 else 'MEDIUM'
+            months_label = '1 month' if Buffer < 15 else '2 months'
             signals.append({
                 'type': 'WARNING', 'signal': 'low_buffer',
                 'severity': severity,
@@ -606,7 +606,7 @@ class FRICalculator:
             })
 
         # Critical FRI
-        fri_approx = 0.45 * buffer + 0.30 * stability + 0.25 * momentum
+        fri_approx = 0.45 * Buffer + 0.30 * stability + 0.25 * momentum
         if fri_approx < 30:
             signals.append({
                 'type': 'CRITICAL', 'signal': 'fri_below_threshold',
