@@ -112,7 +112,7 @@ class FRIResult:
             'income_segment': self.income_segment,
             'confidence': round(self.confidence, 3),
             'detail': {
-                'buffer': self.buffer_detail,
+                'buffer': self.Buffer_detail,
                 'stability': self.stability_detail,
                 'momentum': self.momentum_detail,
             },
