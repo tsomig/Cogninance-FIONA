@@ -7,7 +7,7 @@ to compute Buffer (45%), Stability (30%), and Momentum (25%) components.
 This module contains ONLY calculation logic, weights, and scale factors.
 Transaction classification rules live in fri_category_map.py.
 
-Author: George Tsomidis, PhD — Cogninance, 2026 
+Author: George Tsomidis, PhD — Cogninance, Feb 2026 
 """
 
 import numpy as np
